@@ -64,7 +64,15 @@ type DefaultLogTransport struct {
 
 func (s *DefaultLogTransport) Publish(msgs []*flowmessage.FlowMessage) {
 	for _, msg := range msgs {
-		fmt.Printf("%v\n", FlowMessageToString(msg))
+		//fmt.Printf("Message::::: %v\n", FlowMessageToString(msg))
+		n := net.IP(msg.DstAddr)
+		if !isPrivateIP(n) {
+			if msg.DstPort == 443 && msg.Packets > 20{
+				fmt.Println(n.String(), msg.Packets)
+			}
+
+		}
+
 	}
 }
 
